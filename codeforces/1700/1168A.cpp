@@ -1,77 +1,44 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <algorithm>
-#include <cmath>
-#include <vector>
-#include <set>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
-#include <ctime>
-#include <cassert>
-#include <complex>
-#include <string>
-#include <cstring>
-#include <chrono>
-#include <random>
-#include <queue>
-#include <bitset>
+//Credit: Um_Nik
+#include <bits/stdc++.h>
+#define FOR(a, b) for(int i = a ; i < b; i++)
+#define FORI(i, a, b) for(i = a; i < b ; i++)
+#define all(x) x.begin(), x.end()
 using namespace std;
-    
-#ifdef LOCAL
-    #define eprintf(...) fprintf(stderr, __VA_ARGS__)
-#else
-    #define eprintf(...) 42
-#endif
-    
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef pair<ll, int> pli;
-typedef pair<ll, ll> pll;
-typedef long double ld;
-#define mp make_pair
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-    
-const int N = 300300;
+
+vector<int> arr;
 int n, m;
-int a[N];
-    
-bool solve(int x) {
-    int y = 0;
-    for (int i = 0; i < n; i++) {
-        if (a[i] <= y && y <= a[i] + x) {
-    
-        } else if (y + m <= a[i] + x) {
-    
-        } else if (a[i] <= y) {
+
+bool check(int x) {
+    int cur = 0;
+    FOR(0, n) {
+        if(arr[i] <= cur and cur <= arr[i] + x) {
+
+        } else if(cur + m <= arr[i] + x) {
+
+        } else if(arr[i] <= cur) {
             return false;
         } else {
-            y = a[i];
+            cur = arr[i];
         }
     }
     return true;
 }
-    
-int main()
-{
-//	freopen("input.txt", "r", stdin);
-//	freopen("output.txt", "w", stdout);
-    
-    scanf("%d%d", &n, &m);
-    for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-    int l = -1, r = m;
-    while(r - l > 1) {
-        int x;
-        x = (l + r) / 2;
-        if (solve(x))
-            r = x;
-        else
-            l = x;
+int main() {
+    cin >> n >> m;
+    arr.resize(n);
+    FOR(0, n) {
+        cin >> arr[i];
     }
-    printf("%d\n", r);
-    
+    int l = 0, r = m + 1;
+    while(l < r) {
+        int mid = (l + r) / 2;
+        if(check(mid)) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+
+    cout << r << endl;
     return 0;
 }
